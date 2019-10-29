@@ -70,6 +70,7 @@ export default {
       if (reg.test(this.form.username)) {
         this.$axios.post('/captchas', { tel: this.form.username })
           .then((res) => {
+            this.$message.success('验证码发送成功')
             console.log(res)
           })
           .catch((err) => {
@@ -87,8 +88,13 @@ export default {
           const { password2, ...resForm } = this.form
           console.log(resForm)
           this.$axios.post('/accounts/register', resForm).then((res) => {
+            this.$message.success('注册成功')
             console.log(res)
+            setTimeout(() => {
+              this.$router.push('0')
+            },1000)
           }).catch((err) => {
+            this.$message.error('注册失败')
             console.log(err)
           })
         } else {
@@ -103,7 +109,6 @@ export default {
 
 <style lang='less' scoped>
 .register_form {
-  padding: 20px;
 
   .btnRegister {
     width: 100%;

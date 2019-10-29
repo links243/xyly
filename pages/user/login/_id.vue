@@ -6,14 +6,12 @@
           v-for="(item,index) in ['登录','注册']"
           :key="index"
           class="title_item"
-          :class="index === current ? 'active' : '' "
+          :class="index == current ? 'active' : '' "
           @click="changeActive(index)"
-        >
-          {{ item }}
-        </div>
+        >{{ item }}</div>
       </div>
       <div class="login_main_content">
-        <div v-if="current === 1">
+        <div v-if="current == 1">
           <registerForm />
         </div>
         <div v-else>
@@ -25,23 +23,24 @@
 </template>
 
 <script>
-import RegisterForm from '@/components/user/registerForm.vue'
-import LoginForm from '@/components/user/loginForm.vue'
+import RegisterForm from "@/components/user/registerForm.vue";
+import LoginForm from "@/components/user/loginForm.vue";
 export default {
   components: {
-    RegisterForm, LoginForm
+    RegisterForm,
+    LoginForm
   },
-  data () {
+  data() {
     return {
-      current: 1
-    }
+      current: this.$route.params.id
+    };
   },
   methods: {
-    changeActive (index) {
-      this.current = index
+    changeActive(index) {
+      this.$router.push(`${index}`);
     }
   }
-}
+};
 </script>
 
 <style lang='less' scoped>
@@ -67,7 +66,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        cursor:pointer;
+        cursor: pointer;
       }
       .active {
         color: orange;
@@ -84,6 +83,9 @@ export default {
           background-color: orange;
         }
       }
+    }
+    .login_main_content {
+      padding: 20px;
     }
   }
 }
