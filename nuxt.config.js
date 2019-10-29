@@ -13,6 +13,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      // { rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_1168872_ehvuah8v57g.css' }
     ]
   },
   /*
@@ -23,7 +24,8 @@ export default {
   ** Global CSS
   */
   css: [
-    'element-ui/lib/theme-chalk/index.css'
+    'element-ui/lib/theme-chalk/index.css',
+    'assets/main.css'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -35,8 +37,6 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
   ],
   /*
   ** Nuxt.js modules
@@ -56,11 +56,9 @@ export default {
   ** Build configuration
   */
   build: {
-    transpile: [/^element-ui/],
+    transpile: [/^element-ui/]
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
-    }
   }
 }

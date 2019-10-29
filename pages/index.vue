@@ -1,72 +1,68 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        xyly
-      </h1>
-      <h2 class="subtitle">
-        My exquisite Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <div class="xyly_index">
+    <!-- 轮播图开始 -->
+    <div class="index_carousel">
+      <el-carousel height="700px">
+        <el-carousel-item v-for="(item,index) in swiperList" :key="index">
+          <div :style=" `background:url(${ $axios.defaults.baseURL + item.url}); center center;height:700px;` " />
+        </el-carousel-item>
+      </el-carousel>
+
+      <!-- tab栏开始 -->
+      <div class="index_tabs">
+        <TypesTab />
       </div>
+    <!-- tab栏结束 -->
     </div>
+    <!-- 轮播图结束 -->
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
+import TypesTab from '@/components/index/typesTab.vue'
 export default {
   components: {
-    Logo
+    TypesTab
+  },
+  data () {
+    return {
+      swiperList: []
+    }
+  },
+  asyncData (context) {
+    const $axios = context.app.$axios
+    // console.log($axios)
+    return $axios.get('/scenics/banners')
+      .then((res) => {
+        return {
+          swiperList: res.data.data
+        }
+      })
   }
+  // mounted () {
+  //   this.$axios.get('/scenics/banners')
+  //     .then((res) => {
+  //       // console.log(res)
+  //       this.swiperList = res.data.data
+  //       console.log(this.swiperList)
+  //     })
+  // }
 }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+<style lang='less' scoped>
+.xyly_index{
+  min-width: 1000px;
 }
+.index_carousel {
+position: relative;
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.index_tabs {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+  }
 }
 </style>

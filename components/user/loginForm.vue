@@ -1,6 +1,6 @@
 <template>
   <div>
-    机票
+    登录
   </div>
 </template>
 
