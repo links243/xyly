@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     changeActive(index) {
-      this.$router.push(`${index}`);
+      this.$router.push(`/user/login/${index}`);
     }
   }
 };

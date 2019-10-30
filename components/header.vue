@@ -37,7 +37,7 @@
         </el-dropdown>
         <nuxt-link
           class="login_link"
-          to="/user/login"
+          to="/user/login/0"
         >
 
           <div
@@ -78,7 +78,7 @@ export default {
   },
   mounted(){
 
-    let userStr=localStorage.getItem("userinfo");
+    let userStr = localStorage.getItem("xyly_lc37");
     if(userStr){
       // 存在 
       let userinfo=JSON.parse(userStr);
@@ -91,7 +91,7 @@ export default {
       // 1 删除 vuex中的用户信息
       // 2 删除本地存储的数据
       this.$store.commit("user/setUser",{ token: "", user: {}});
-      localStorage.removeItem("userinfo");
+      localStorage.removeItem("xyly_lc37");
       this.$message.success("退出成功");
       setTimeout(() => {
         this.$router.push("/user/login/0");

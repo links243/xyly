@@ -4,7 +4,7 @@
     <div class="index_carousel">
       <el-carousel height="700px">
         <el-carousel-item v-for="(item,index) in swiperList" :key="index">
-          <div :style=" `background:url(${ $axios.defaults.baseURL + item.url}); center center;height:700px;` " />
+          <div :style=" `background:url(${ $axios.defaults.baseURL + item.url}) center center;height:700px;` " />
         </el-carousel-item>
       </el-carousel>
 
