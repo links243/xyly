@@ -56,13 +56,13 @@ export default {
       currentIndex: 0,
       form: {
         //  出发城市
-        departCity: "北京",
+        departCity: "上海",
         // 出发城市 编码
-        departCode: "BJS",
+        departCode: "SHA",
         // 到达城市
-        destCity: "上海",
+        destCity: "广州",
         // 到达城市 编码
-        destCode: "SHA",
+        destCode: "CAN",
         // 出发时间
         departDate: "2019-11-28"
       }

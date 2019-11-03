@@ -26,7 +26,7 @@
           <div class="seat_row_price">￥{{item.settle_price}}</div>
           <div class="seat_row_btns">
             <div>
-              <el-button type="warning"  size="mini" >选定</el-button>
+              <el-button type="warning"  size="mini" @click="linkToOrder(data.id,item.seat_xid)">选定</el-button>
               <p>剩余{{item.discount}}</p>
             </div>
           </div>
@@ -61,6 +61,11 @@ export default {
   
   
         return `${hour}时${minutes}分`
+    }
+  },
+  methods: {
+    linkToOrder(id,seatXid) {
+      this.$router.push({ path:'/air/order', query:{id,seatXid} })
     }
   }
 };

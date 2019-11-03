@@ -3,9 +3,7 @@
     <!-- 正文 开始 -->
     <div class="flights_main">
       <!-- 1 筛选模块 开始 -->
-      <FlightsFilter
-       :flightsData="flightsData"
-       />
+      <FlightsFilter :flightsData="flightsData" @filterChange="filterChange" />
       <!-- 1 筛选模块 结束 -->
 
       <!-- 2 表单的头部 开始 -->
@@ -53,6 +51,9 @@ export default {
         options: {}
       },
 
+      // 过滤条件后的机票数据
+      filterData: [],
+
       // 分页对象
       page: {
         // 当前页码
@@ -84,6 +85,10 @@ export default {
           this.flightsData = res.data;
           // 机票总数量
           this.page.total = this.flightsData.flights.length;
+          // 第一次加载的时候给过滤数据一个默认数据
+          this.filterData = this.flightsData.flights
+          console.log(this.filterData)
+          console.log(this.flightsData.flights)
 
           // 需要实现 数组分页  this.flightsData.flights
           // 记公式
@@ -102,24 +107,63 @@ export default {
           );
         });
       } else {
-        this.currentFlights = this.flightsData.flights.slice(
+        // 注意这里分页要用的数据（this.filterData）和上面的分页数据（this.flightsData.flights）不一样
+        this.currentFlights = this.filterData.slice(
           (this.page.currentPage - 1) * this.page.pageSize,
           this.page.currentPage * this.page.pageSize
         );
+        // debugger;
+        // 过滤后也要刷新一下总页数
+        this.page.total = this.filterData.length;
       }
     },
 
     // 分页数组改变触发
     handleSizeChange(value) {
       this.page.pageSize = value;
-      this.getList()
+      this.getList();
     },
 
     // 当前页码改变触发事件
     handleCurrentChange(value) {
       this.page.currentPage = value;
+      this.getList();
+    },
 
-      this.getList()
+    // 筛选条件改变触发事件
+    filterChange(filterObj) {
+      console.log(filterObj);
+
+      let flightsDataTemp = this.flightsData.flights.filter(val => {
+        // 过滤起飞机场
+        let filterAirport = 
+            val.org_airport_name === filterObj.airport 
+            || filterObj.airport === '';
+
+        // 过滤航空公司
+        let filterCompany =
+            val.airline_name === filterObj.company
+            || filterObj.company === '';
+
+        // 过滤时间段
+        let from = +filterObj.flightTimes.split("|")[0];
+        let to = +filterObj.flightTimes.split("|")[1];
+        let time = new Date(val.dep_datetime).getHours();
+        let filterTime = 
+            ( to > time && time >= from )
+            || filterObj.flightTimes === '';
+        
+        // 过滤机型
+        let filterSizes = 
+            val.plane_size === filterObj.sizes
+            || filterObj.sizes === '';
+
+        return filterAirport && filterCompany && filterSizes && filterTime;
+      });
+
+      this.filterData = flightsDataTemp;
+      // 筛选完毕后刷新一下分页
+      this.getList();
     }
   },
   mounted() {

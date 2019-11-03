@@ -1,10 +1,10 @@
 <template>
   <div class="flights_filter">
     <div class="filter_main">
-      <div class="main_path" @click="aaa">单程: 广州-上海/ 2019-10-28</div>
+      <div class="main_path" >单程: {{flightsData.info.departCity}}-{{flightsData.info.destCity}}/{{flightsData.info.departDate}}</div>
       <div class="main_selects" v-if="flightsData.flights.length">
         <div class="select_item">
-          <el-select placeholder="起飞机场" size="mini" v-model="airport">
+          <el-select placeholder="起飞机场" size="mini" v-model="airport" @change="filterChange">
             <el-option
               v-for="item in filterData.airport"
               :key="item.value"
@@ -14,7 +14,7 @@
           </el-select>
         </div>
         <div class="select_item">
-          <el-select placeholder="起飞时间" size="mini" v-model="flightTimes">
+          <el-select placeholder="起飞时间" size="mini" v-model="flightTimes" @change="filterChange">
             <el-option
               v-for="item in filterData.flightTimes"
               :key="item.value"
@@ -24,7 +24,7 @@
           </el-select>
         </div>
         <div class="select_item">
-          <el-select placeholder="航空公司" size="mini" v-model="company">
+          <el-select placeholder="航空公司" size="mini" v-model="company" @change="filterChange">
             <el-option
               v-for="item in  filterData.company"
               :key="item.value"
@@ -34,7 +34,7 @@
           </el-select>
         </div>
         <div class="select_item">
-          <el-select placeholder="机型" size="mini" v-model="sizes">
+          <el-select placeholder="机型" size="mini" v-model="sizes" @change="filterChange">
             <el-option
               v-for="item in  filterData.planeSize"
               :key="item.value"
@@ -66,6 +66,18 @@ export default {
       // 机型
       sizes: ""
     };
+  },
+  methods: {
+    filterChange() {
+      let filter = {
+        airport:this.airport,
+        flightTimes:this.flightTimes,
+        company:this.company,
+        sizes:this.sizes
+      }
+      // console.log(filter)
+      this.$emit('filterChange', filter)
+    }
   },
   computed: {
     filterData() {
@@ -99,12 +111,6 @@ export default {
       return { airport, flightTimes, company, planeSize };
     }
   },
-  methods: {
-    aaa() {
-      console.log(this.filterData);
-      console.log(this.flightsData);
-    }
-  }
 };
 </script>
 <style lang="less" scoped>

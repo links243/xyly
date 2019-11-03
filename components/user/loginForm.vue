@@ -62,6 +62,7 @@ export default {
       this.$store.dispatch('user/setUser', this.form)
         .then(res => {
           this.$message.success('登录成功')
+          console.log(res)
           setTimeout(() => {
             this.$router.push('/')
           },1000)
