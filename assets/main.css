@@ -12,3 +12,11 @@
 img{
   display: block;
 }
+a{
+  color: #000;
+  outline: none;
+  text-decoration: none;
+}
+i{
+  font-style: normal;
+}

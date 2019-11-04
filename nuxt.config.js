@@ -5,15 +5,10 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
-    ],
+    title: "闲云旅游网",
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-      // { rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_1168872_ehvuah8v57g.css' }
+      // 可以放外网下的样式文件   
+      { rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_1168872_ehvuah8v57g.css' }
     ]
   },
   /*
@@ -25,7 +20,8 @@ export default {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    'assets/main.css'
+    'assets/main.css',
+    'assets/font/iconfont.css',
   ],
   /*
   ** Plugins to load before mounting the App

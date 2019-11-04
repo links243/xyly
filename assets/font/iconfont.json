@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "87533",
+      "name": "位置",
+      "font_class": "weizhi",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "4547329",
+      "name": "皇冠 冠军",
+      "font_class": "huangguan",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "4987116",
+      "name": "星",
+      "font_class": "xing",
+      "unicode": "e6f6",
+      "unicode_decimal": 59126
+    }
+  ]
+}
