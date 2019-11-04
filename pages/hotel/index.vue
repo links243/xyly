@@ -1,5 +1,13 @@
 <template>
   <div class="index">
+     <!-- 面包屑开始结束 -->
+    <div class="breadcrumb">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>酒店</el-breadcrumb-item>
+        <el-breadcrumb-item>南通市酒店预订</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <!-- 酒店列表开始 -->
     <!-- 酒店列表开始 -->
     <hotelItem :hotelInfo="filterHotelInfo" />
     <!-- 酒店列表结束 -->
@@ -112,8 +120,11 @@ export default {
 
 <style lang='less' scoped>
 .index {
-  width: 1000px;
+  width: 1260px;
   margin: 0 auto;
+  .breadcrumb{
+    margin: 20px 0;
+  }
   .pagination {
     display: flex;
     justify-content: flex-end;
