@@ -1,7 +1,7 @@
 <template>
   <div class="index">
-     <!-- 面包屑开始 -->
-    <div class="breadcrumb" >
+    <!-- 面包屑开始 -->
+    <div class="breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item>酒店</el-breadcrumb-item>
         <el-breadcrumb-item>南通市酒店预订</el-breadcrumb-item>
@@ -9,11 +9,17 @@
     </div>
     <!-- 面包屑结束 -->
     <!-- 搜索栏开始 -->
-    <searchBar :cityList='cities' @handlePrice="getPriceInfo" ></searchBar>
+    <searchBar :cityList="cities" @handlePrice="getPriceInfo"></searchBar>
     <!-- 搜索栏结束 -->
 
     <!-- 筛选栏开始 -->
-    <filterBar @changePrice='priceChange' @levelChange='changeLevel' @typeChange='changeType' @assetChange='changeAsset' @brandChange='changeBrand'></filterBar>
+    <filterBar
+      @changePrice="priceChange"
+      @levelChange="changeLevel"
+      @typeChange="changeType"
+      @assetChange="changeAsset"
+      @brandChange="changeBrand"
+    ></filterBar>
     <!-- 筛选栏结束 -->
     <!-- 酒店列表开始 -->
     <!-- 酒店列表开始 -->
@@ -41,13 +47,23 @@ import searchBar from "@/components/hotel/SearchBar";
 import filterBar from "@/components/hotel/FilterBar";
 export default {
   components: {
-    hotelItem,searchBar,filterBar
+    hotelItem,
+    searchBar,
+    filterBar
   },
   data() {
     return {
       // 从服务器获取到城市搜索输入框可显示城市数据
-      cities:["南京","北京"],
-      targetCity:"",  
+      cities: ["南京", "北京"],
+      targetCity: "",
+      // 筛选信息
+      filterInfo: {
+        city: 87
+        // hotellevel:0,
+        // hoteltype:0,
+        // hotelbrand:0,
+        // price:
+      },
       // 从服务器获取的酒店信息
       hotelInfo: [],
       // 分页过滤后的酒店信息
@@ -73,13 +89,12 @@ export default {
     //   this.page.total = res.data.data.length;
     // });
     this.getHotelList(true);
-    
   },
-  
+
   methods: {
     getHotelList(isfrist) {
       if (isfrist) {
-        this.$axios.get("/hotels", { params: { city: 87 } }).then(res => {
+        this.$axios.get("/hotels", { params: this.filterInfo }).then(res => {
           this.hotelInfo = res.data.data;
           // 给分页模块的总数赋值
           this.page.total = res.data.data.length;
@@ -130,24 +145,60 @@ export default {
       this.getHotelList();
     },
     // 点击查看 “价格按钮” 获取 城市 日期 人数 数据
-    getPriceInfo(obj){
+    getPriceInfo(obj) {
       console.log(obj);
     },
     // 滑块获得价格
-    priceChange(price){
-      console.log(price);
+    priceChange(price) {
+      this.filterInfo.price_lt=price
+      // console.log(this.filterInfo.price_lt);
+      this.getHotelList(true);
     },
-    changeLevel(level){
-      console.log(level);
+    // 酒店等级
+    changeLevel(level) {
+      // console.log(level);
+      level.forEach(e => {
+        this.filterInfo.hotellevel = e;
+      });
+      // console.log(this.filterInfo);
+      if(level.length===0){
+        delete this.filterInfo.hotellevel
+      }
+      this.getHotelList(true);
     },
-    changeType(type){
-      console.log(type);
+    // 酒店类型
+    changeType(type) {
+      type.forEach(e => {
+        this.filterInfo.hoteltype = e;
+      });
+      // console.log(this.filterInfo);
+      if(type.length===0){
+        delete this.filterInfo.hoteltype
+      }
+      this.getHotelList(true);
     },
-    changeAsset(asset){
-      console.log(asset);
+    // 酒店设施
+    changeAsset(asset) {
+      asset.forEach(e => {
+        this.filterInfo.hotelasset = e;
+      });
+      // console.log(this.filterInfo);
+      if(asset.length===0){
+        delete this.filterInfo.hotelasset
+      }
+      this.getHotelList(true);
     },
-    changeBrand(band){
-      console.log(band);
+    // 酒店品牌
+    changeBrand(brand) {
+      // console.log(brand);
+      brand.forEach(e => {
+        this.filterInfo.hotelbrand = e;
+      });
+      // console.log(brand);
+      if(brand.length===0){
+        delete this.filterInfo.hotelbrand
+      }
+      this.getHotelList(true);
     }
   }
 };
@@ -157,7 +208,7 @@ export default {
 .index {
   width: 1000px;
   margin: 0 auto;
-  .breadcrumb{
+  .breadcrumb {
     margin: 20px 0;
   }
   .pagination {
