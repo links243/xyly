@@ -1,12 +1,20 @@
 <template>
   <div class="index">
-     <!-- 面包屑开始结束 -->
-    <div class="breadcrumb">
+     <!-- 面包屑开始 -->
+    <div class="breadcrumb" >
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item>酒店</el-breadcrumb-item>
         <el-breadcrumb-item>南通市酒店预订</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
+    <!-- 面包屑结束 -->
+    <!-- 搜索栏开始 -->
+    <searchBar :cityList='cities' @handlePrice="getPriceInfo" ></searchBar>
+    <!-- 搜索栏结束 -->
+
+    <!-- 筛选栏开始 -->
+    <filterBar @changePrice='priceChange' @levelChange='changeLevel' @typeChange='changeType' @assetChange='changeAsset' @brandChange='changeBrand'></filterBar>
+    <!-- 筛选栏结束 -->
     <!-- 酒店列表开始 -->
     <!-- 酒店列表开始 -->
     <hotelItem :hotelInfo="filterHotelInfo" />
@@ -29,9 +37,17 @@
 
 <script>
 import hotelItem from "@/components/hotel/HotelItem";
+import searchBar from "@/components/hotel/SearchBar";
+import filterBar from "@/components/hotel/FilterBar";
 export default {
+  components: {
+    hotelItem,searchBar,filterBar
+  },
   data() {
     return {
+      // 从服务器获取到城市搜索输入框可显示城市数据
+      cities:["南京","北京"],
+      targetCity:"",  
       // 从服务器获取的酒店信息
       hotelInfo: [],
       // 分页过滤后的酒店信息
@@ -57,10 +73,9 @@ export default {
     //   this.page.total = res.data.data.length;
     // });
     this.getHotelList(true);
+    
   },
-  components: {
-    hotelItem
-  },
+  
   methods: {
     getHotelList(isfrist) {
       if (isfrist) {
@@ -113,6 +128,26 @@ export default {
       this.page.currentPage = val;
       // 刷新一下数据
       this.getHotelList();
+    },
+    // 点击查看 “价格按钮” 获取 城市 日期 人数 数据
+    getPriceInfo(obj){
+      console.log(obj);
+    },
+    // 滑块获得价格
+    priceChange(price){
+      console.log(price);
+    },
+    changeLevel(level){
+      console.log(level);
+    },
+    changeType(type){
+      console.log(type);
+    },
+    changeAsset(asset){
+      console.log(asset);
+    },
+    changeBrand(band){
+      console.log(band);
     }
   }
 };
@@ -120,7 +155,7 @@ export default {
 
 <style lang='less' scoped>
 .index {
-  width: 1260px;
+  width: 1000px;
   margin: 0 auto;
   .breadcrumb{
     margin: 20px 0;
